@@ -1,0 +1,81 @@
+<%- include('../partials/header') %>
+
+
+
+    <label>Airline: </label>
+    <%= flight.airline %>
+      <br>
+      <label>Departing Airport: </label>
+      <%= flight.airport %>
+        <br>
+        <label>Flight No: </label>
+        <%= flight.flightNo %>
+          <br>
+          <label>Departing Time: </label>
+          <%= flight.departs %>
+            <br>
+            <br>
+
+            <% flight.destinations.forEach(function(d) { %>
+              <tr>
+                <label>Arrival Airport: </label>
+                <td>
+                  <%= d.airport %>
+                </td>
+                <td><br></td>
+                <label>Arrival Time: </label>
+                <td>
+                  <%= d.arrival %>
+                </td>
+                <td><br></td>
+                <td><br></td>
+              </tr>
+              <% }); %>
+
+                <% tickets.forEach(function(t, index) { %>
+                  <tr>
+                    <% if (index===0) { %>
+                      <td>Seat</td>
+                      <td>Price</td>
+                      <td><br></td>
+                      <td>
+                        <%= t.seat %>
+                      </td>
+                      <td>$<%= t.price %>
+                      </td>
+                      <td><br></td>
+                      <% } else { %>
+                        <td>
+                          <%= t.seat %>
+                        </td>
+                        <td>$<%= t.price %>
+                        </td>
+                        <td><br></td>
+                  </tr>
+                  <% }}); %>
+
+                    <br>
+                    <br>
+
+                    <form action="/flights/<%= flight.id %>/destinations" method="POST">
+                      <label>Arrival Destination:
+                        <select name="airport">
+                          <option value="AUS">AUS</option>
+                          <option value="DFW">DFW</option>
+                          <option value="DEN">DEN</option>
+                          <option value="LAX">LAX</option>
+                          <option value="SAN">SAN</option>
+                        </select>
+                      </label><br>
+                      <label>Arrival Date:
+                        <input type="datetime-local" name="arrival" value=<%=new Date().toISOString().slice(0, 16); %> >
+                      </label><br>
+
+                      <input type="submit" value="Add Flight Details">
+                    </form>
+                    <br>
+
+                    <a href="/flights/<%= flight.id %>/tickets/new">Add a Ticket</a>
+                    </body>
+
+                    </html>
